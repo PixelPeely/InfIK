@@ -1,4 +1,5 @@
 import numpy as np
+import Util
 
 class Joint:
     alpha = 0 
@@ -35,20 +36,49 @@ class Joint:
         self.theta = theta
         self.trig_table.updateTheta(theta)
 
+    def getAxisVector(self):
+        trig = self.trig_table
+        return np.array([
+            trig.cos_b * trig.cos_a,
+            trig.cos_b * trig.sin_a,
+            trig.sin_b
+        ])
+
     def getUnitVector(self):
         trig = self.trig_table
         return np.array([
             -trig.sin_t * trig.sin_b * trig.cos_a - trig.cos_t * trig.sin_a,
             trig.cos_t * trig.cos_a - trig.sin_t * trig.sin_b * trig.sin_a,
-            trig.sin_t * trig.cos_b])
+            trig.sin_t * trig.cos_b
+        ])
 
     def getLocalPosition(self):
         return self.getUnitVector() * self.length
 
-    def getLocalPositionDerivative():
-        return 0
+    def getLocalPositionDerivative(self):
+        trig = self.trig_table
+        return self.length * np.array([
+            trig.sin_t * trig.sin_a - trig.cos_t * trig.sin_b * trig.cos_a,
+            - trig.sin_t * trig.cos_a - trig.cos_t * trig.sin_b * trig.sin_a,
+            trig.cos_t * trig.cos_b
+        ])
 
+    def getRotationMatrix(self):
+        r = self.getUnitVector()
+        a = self.getAxisVector()
+        return np.array([
+            [r[0], a[1] * r[2] - a[2] * r[1], a[0]],
+            [r[1], a[2] * r[0] - a[0] * r[2], a[1]],
+            [r[2], a[0] * r[1] - a[1] * r[0], a[2]]
+        ])
+
+    def getRotationMatrixDerivative(self):
+        r = self.getUnitVector()
+        a = self.getAxisVector()
+        return np.array([
+            
+        ])
 
 joint = Joint(0.39, 0.76, 1.17)
 joint.setPosition(-1.16)
-print(joint.getLocalPosition())
+print(Util.linearTransformation([1,1,1], mat))
