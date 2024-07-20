@@ -16,3 +16,7 @@ ik_system = IKSystem(
 print(Solver.solve(ik_system))
 #You can also access these numbers directly from the Joint object:
 print(ik_system.joints[2].theta)
+
+#The absolute position of any servo is also available
+ik_system.joints[0].setPosition(1)
+print(ik_system.joints[2].getGlobalPosition(2, ik_system.joints))

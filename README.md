@@ -39,7 +39,7 @@ As mentioned, for the system to be solvable, the number of constraints must equa
     * `joints`: List of the joints in your system in the order they are connected
     * `constraints`: Unordered list of constraints to be placed on your system
     * `allowed_error` (optional): The maximum allowed difference between two consecutive guesses (Default: `1e-3`)
-    * `max_iterations` (optional): The maximum number of iterations allowed before the solver concludes that it failed to converge
-        * If this number is reached, the success flag return from the `Solver.solve()` method will be `False` (Default: `100`)
+    * `max_iterations` (optional): The maximum number of iterations allowed before the solver concludes that it failed to converge (Default: `100`)
+        * If this number is reached, the success flag return from the `Solver.solve()` method will be `False`
 2. Solve the system by calling `Solver.solve(IKSystem)` on your system, which will return a list of servo positions in the same order as the joints
     * You can also access these positions directly from `joints` in your `IKSystem` object (`Joint.theta`)
