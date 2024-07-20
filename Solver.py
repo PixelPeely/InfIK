@@ -5,7 +5,7 @@ import Util
 joints = [
     Joint(0.39, 0.76, 1.17),
     Joint(-0.41, 0.45, 1),
-    Joint(0.55,-0.87, 1.22)
+    Joint(0.55,-0.87, 1.22),
 ]
 
 constraints = [
@@ -14,4 +14,4 @@ constraints = [
     Constraint(3, 2, -1.56)
 ]
 
-print(Util.globalPositionDerivative(1, 0, joints))
+print(Util.globalPositionDerivative(2, 2, joints))

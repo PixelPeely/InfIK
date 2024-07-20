@@ -47,7 +47,6 @@ class Joint:
         return self.getUnitVector() * self.length
 
     def getLocalPositionDerivative(self):
-        print(self.cos_a)
         return self.length * np.array([
             self.sin_t * self.sin_a - self.cos_t * self.sin_b * self.cos_a,
             - self.sin_t * self.cos_a - self.cos_t * self.sin_b * self.sin_a,
