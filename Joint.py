@@ -49,10 +49,8 @@ class Joint:
     def getGlobalPosition(self, self_index, joints):
         summation = [0,0,0]
         for i in range(self_index + 1):
-            print(f"Sum {i}")
             prod = joints[i].getLocalPosition()
             for j in range(i):
-                print(f"Prod {i-j - 1}")
                 prod = Util.linearTransformation(prod, joints[i - j - 1].getRotationMatrix())
             summation += prod
         return summation
