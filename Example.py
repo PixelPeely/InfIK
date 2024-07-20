@@ -1,8 +1,5 @@
-import Solver
-from Joint import Joint
-from IKSystem import IKSystem
-from Constraint import Constraint
-
+from IK_3D import *
+ 
 ik_system = IKSystem(
     joints=[
         Joint(0.39, 0.76, 1.17),
@@ -10,10 +7,12 @@ ik_system = IKSystem(
         Joint(0.55,-0.87, 1.22),
     ],
     constraints=[
-        Constraint(2, 0, 0.1),
-        Constraint(2, 1, 1.51),
-        Constraint(2, 2, -1.56)
+        Constraint(2, 0, 1),
+        Constraint(2, 1, 1),
+        Constraint(2, 2, 1)
     ]
 )
 
 print(Solver.solve(ik_system))
+#You can also access these numbers directly from the Joint object:
+print(ik_system.joints[2].theta)
