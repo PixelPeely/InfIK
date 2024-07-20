@@ -75,10 +75,16 @@ class Joint:
     def getRotationMatrixDerivative(self):
         r = self.getUnitVector()
         a = self.getAxisVector()
+        trig = self.trig_table
         return np.array([
-            
+            [trig.sin_t * trig.sin_a - trig.cos_t * trig.sin_b * trig.cos_a,
+            a[1] * trig.cos_t * trig.cos_b + a[2] * (trig.sin_t * trig.cos_a + trig.cos_t * trig.sin_b * trig.sin_a),
+            0],
+            [-trig.sin_t * trig.cos_a - trig.cos_t * trig.sin_b * trig.sin_a,
+            a[2] * (trig.sin_t * trig.sin_a - trig.cos_t * trig.sin_b * trig.cos_a) - a[0] * trig.cos_t * trig.cos_b,
+            0],
+            [trig.cos_t * trig.cos_b,
+            a[0] * (-trig.sin_t * trig.cos_a - trig.cos_t * trig.sin_b * trig.sin_a) 
+                - a[1] * (trig.sin_t * trig.sin_a - trig.cos_t * trig.sin_b * trig.cos_a),
+            0]
         ])
-
-joint = Joint(0.39, 0.76, 1.17)
-joint.setPosition(-1.16)
-print(Util.linearTransformation([1,1,1], mat))
