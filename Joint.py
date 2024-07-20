@@ -26,8 +26,8 @@ class Joint:
     
     def setPosition(self, theta):
         self.theta = theta
-        self.sin_t = np.sin(joint.theta)
-        self.cos_t = np.cos(joint.theta)
+        self.sin_t = np.sin(self.theta)
+        self.cos_t = np.cos(self.theta)
 
     def getAxisVector(self):
         return np.array([
@@ -45,6 +45,17 @@ class Joint:
 
     def getLocalPosition(self):
         return self.getUnitVector() * self.length
+
+    def getGlobalPosition(self, self_index, joints):
+        summation = [0,0,0]
+        for i in range(self_index + 1):
+            print(f"Sum {i}")
+            prod = joints[i].getLocalPosition()
+            for j in range(i):
+                print(f"Prod {i-j - 1}")
+                prod = Util.linearTransformation(prod, joints[i - j - 1].getRotationMatrix())
+            summation += prod
+        return summation
 
     def getLocalPositionDerivative(self):
         return self.length * np.array([
