@@ -7,60 +7,51 @@ class Joint:
     theta = 0
     length = 0
     
-    class Trig_Table:
-        sin_t = 0
-        cos_t = 0
-        sin_a = 0
-        cos_a = 0
-        sin_b = 0
-        cos_b = 0
-
-        def init(self, joint):
-            self.sin_a = np.sin(joint.alpha)
-            self.cos_a = np.cos(joint.alpha)
-            self.sin_b = np.sin(joint.beta)
-            self.cos_b = np.cos(joint.beta)
+    sin_t = 0
+    cos_t = 1
+    sin_a = 0
+    cos_a = 1
+    sin_b = 0
+    cos_b = 1
         
-        def updateTheta(self, theta):
-            self.sin_t = np.sin(joint.theta)
-            self.cos_t = np.cos(joint.theta)
-    trig_table = Trig_Table()
 
     def __init__(self, alpha, beta, length):
         self.alpha = alpha
         self.beta = beta
         self.length = length
-        self.trig_table.init(self)
+        self.sin_a = np.sin(alpha)
+        self.cos_a = np.cos(alpha)
+        self.sin_b = np.sin(beta)
+        self.cos_b = np.cos(beta)
     
     def setPosition(self, theta):
         self.theta = theta
-        self.trig_table.updateTheta(theta)
+        self.sin_t = np.sin(joint.theta)
+        self.cos_t = np.cos(joint.theta)
 
     def getAxisVector(self):
-        trig = self.trig_table
         return np.array([
-            trig.cos_b * trig.cos_a,
-            trig.cos_b * trig.sin_a,
-            trig.sin_b
+            self.cos_b * self.cos_a,
+            self.cos_b * self.sin_a,
+            self.sin_b
         ])
 
     def getUnitVector(self):
-        trig = self.trig_table
         return np.array([
-            -trig.sin_t * trig.sin_b * trig.cos_a - trig.cos_t * trig.sin_a,
-            trig.cos_t * trig.cos_a - trig.sin_t * trig.sin_b * trig.sin_a,
-            trig.sin_t * trig.cos_b
+            -self.sin_t * self.sin_b * self.cos_a - self.cos_t * self.sin_a,
+            self.cos_t * self.cos_a - self.sin_t * self.sin_b * self.sin_a,
+            self.sin_t * self.cos_b
         ])
 
     def getLocalPosition(self):
         return self.getUnitVector() * self.length
 
     def getLocalPositionDerivative(self):
-        trig = self.trig_table
+        print(self.cos_a)
         return self.length * np.array([
-            trig.sin_t * trig.sin_a - trig.cos_t * trig.sin_b * trig.cos_a,
-            - trig.sin_t * trig.cos_a - trig.cos_t * trig.sin_b * trig.sin_a,
-            trig.cos_t * trig.cos_b
+            self.sin_t * self.sin_a - self.cos_t * self.sin_b * self.cos_a,
+            - self.sin_t * self.cos_a - self.cos_t * self.sin_b * self.sin_a,
+            self.cos_t * self.cos_b
         ])
 
     def getRotationMatrix(self):
@@ -75,16 +66,15 @@ class Joint:
     def getRotationMatrixDerivative(self):
         r = self.getUnitVector()
         a = self.getAxisVector()
-        trig = self.trig_table
         return np.array([
-            [trig.sin_t * trig.sin_a - trig.cos_t * trig.sin_b * trig.cos_a,
-            a[1] * trig.cos_t * trig.cos_b + a[2] * (trig.sin_t * trig.cos_a + trig.cos_t * trig.sin_b * trig.sin_a),
+            [self.sin_t * self.sin_a - self.cos_t * self.sin_b * self.cos_a,
+            a[1] * self.cos_t * self.cos_b + a[2] * (self.sin_t * self.cos_a + self.cos_t * self.sin_b * self.sin_a),
             0],
-            [-trig.sin_t * trig.cos_a - trig.cos_t * trig.sin_b * trig.sin_a,
-            a[2] * (trig.sin_t * trig.sin_a - trig.cos_t * trig.sin_b * trig.cos_a) - a[0] * trig.cos_t * trig.cos_b,
+            [-self.sin_t * self.cos_a - self.cos_t * self.sin_b * self.sin_a,
+            a[2] * (self.sin_t * self.sin_a - self.cos_t * self.sin_b * self.cos_a) - a[0] * self.cos_t * self.cos_b,
             0],
-            [trig.cos_t * trig.cos_b,
-            a[0] * (-trig.sin_t * trig.cos_a - trig.cos_t * trig.sin_b * trig.sin_a) 
-                - a[1] * (trig.sin_t * trig.sin_a - trig.cos_t * trig.sin_b * trig.cos_a),
+            [self.cos_t * self.cos_b,
+            a[0] * (-self.sin_t * self.cos_a - self.cos_t * self.sin_b * self.sin_a) 
+                - a[1] * (self.sin_t * self.sin_a - self.cos_t * self.sin_b * self.cos_a),
             0]
         ])
