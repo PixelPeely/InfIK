@@ -2,8 +2,8 @@ from IK_3D import *
  
 ik_system = IKSystem(
     joints=[
-        Joint(0.39, 0.76, 4.2, 33),
-        Joint(-0.41, 0.45, 25, 35),
+        Joint(0.39, 0.76, 35, 33),
+        Joint(-0.41, 0.45, 35, 35),
         Joint(0.55,-0.87, 32, 43),
     ],
     constraints=[
