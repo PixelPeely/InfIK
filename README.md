@@ -9,10 +9,11 @@ A 3D inverse kinematics solver for robotic systems with any number of linked ser
 * The solver can also predict the absolute location of any joint in the system if the position of each servo is known
 
 ## Joints
-All joints in your system can be modeled by the `Joint` object, which contains 4 fields (These fields are defined in the *local space* of the current joint. This means they are independent of the other joints in the system):
-* `alpha` (const): The angle your rotation axis makes with the x-axis when projected onto the xy plane.
-* `beta` (const): The angle your rotation axis makes with the xy plane.
+All joints in a system can be modeled by the `Joint` object, which contains 4 fields (These fields are defined in the *local space* of the current joint. This means they are independent of the other joints in the system):
+* `alpha` (const): The angle the rotation axis makes with the x-axis when projected onto the xy plane.
+* `beta` (const): The angle the rotation axis makes with the xy plane.
 * `length` (const): The length of this joint's arm, which is perpandicular to the rotation axis (the next joint orbits this joint)
+* `height` (const): The distance along the rotation axis from the last joint
 * `theta`: The position of the servo, or the angular position around the rotation axis
 ![Alt text](/local_joint.png)
 * `Red`: The rotation axis
@@ -35,11 +36,11 @@ Constraints are simple and have 3 fields:
 As mentioned, for the system to be solvable, the number of constraints must equal the number of joints
 
 ## How to Use
-1. Import `IK_3D.py` and create an `IKSystem` object to model your system
-    * `joints`: List of the joints in your system in the order they are connected
-    * `constraints`: Unordered list of constraints to be placed on your system
+1. Import `IK_3D.py` and create an `IKSystem` object to model the system
+    * `joints`: List of the joints in the system in the order they are connected
+    * `constraints`: Unordered list of constraints to be placed on the system
     * `allowed_error` (optional): The maximum allowed difference between two consecutive guesses (Default: `1e-3`)
     * `max_iterations` (optional): The maximum number of iterations allowed before the solver concludes that it failed to converge (Default: `100`)
         * If this number is reached, the success flag return from the `Solver.solve()` method will be `False`
-2. Solve the system by calling `Solver.solve(IKSystem)` on your system, which will return a list of servo positions in the same order as the joints
-    * You can also access these positions directly from `joints` in your `IKSystem` object (`Joint.theta`)
+2. Solve the system by calling `Solver.solve(IKSystem)` on any `IKSystem` object, which will return a list of servo positions in the same order as the joints in the system
+    * These positions can also be accessed directly from `joints` in the `IKSystem` object (`Joint.theta`)

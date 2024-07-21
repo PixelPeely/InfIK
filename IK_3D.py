@@ -6,6 +6,7 @@ class Joint:
     beta = 0
     theta = 0
     length = 0
+    height = 0
     
     sin_t = 0
     cos_t = 1
@@ -15,16 +16,17 @@ class Joint:
     cos_b = 1
         
 
-    def __init__(self, alpha, beta, length):
+    def __init__(self, alpha, beta, length, height):
         self.alpha = alpha
         self.beta = beta
         self.length = length
+        self.height = height
         self.sin_a = np.sin(alpha)
         self.cos_a = np.cos(alpha)
         self.sin_b = np.sin(beta)
         self.cos_b = np.cos(beta)
     
-    def setPosition(self, theta):
+    def setTheta(self, theta):
         self.theta = theta
         self.sin_t = np.sin(self.theta)
         self.cos_t = np.cos(self.theta)
@@ -44,11 +46,11 @@ class Joint:
         ])
 
     def getLocalPosition(self):
-        return self.getUnitVector() * self.length
+        return self.getUnitVector() * self.length + self.getAxisVector() * self.height
 
-    def getGlobalPosition(self, self_index, joints):
+    def getGlobalPosition(self, joint_index, joints):
         summation = [0,0,0]
-        for i in range(self_index + 1):
+        for i in range(joint_index + 1):
             prod = joints[i].getLocalPosition()
             for j in range(i):
                 prod = Util.linearTransformation(prod, joints[i - j - 1].getRotationMatrix())
@@ -128,7 +130,7 @@ class Solver:
 
     def updateJointPositions(pos_set, ik_system):
         for i in range(len(pos_set)):
-            ik_system.joints[i].setPosition(pos_set[i])
+            ik_system.joints[i].setTheta(pos_set[i])
 
     def solve(ik_system):
         """
