@@ -1,7 +1,7 @@
 import numpy as np
 import time
 
-class Joint:
+class Joint:    
     alpha = 0 
     beta = 0
     theta = 0
