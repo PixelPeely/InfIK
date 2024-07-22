@@ -12,8 +12,8 @@ A 3D inverse kinematics solver for robotic systems with any number of linked ser
 All joints in a system can be modeled by the `Joint` object, which contains 5 fields (These fields are defined in the *local space* of the current joint, meaning they are independent of the other joints in the system):
 * `alpha` (const): The angle the rotation axis makes with the x-axis when projected onto the xy plane.
 * `beta` (const): The angle the rotation axis makes with the xy plane.
-* `length` (const): The length of this joint's arm, which is perpandicular to the rotation axis (the next joint orbits this joint)
-* `height` (const): The distance along the rotation axis from the last joint
+* `length` (const): The length of this joint's lever arm, which is perpandicular to the rotation axis (the next joint orbits this joint)
+* `height` (const): The distance along the rotation axis from the last joint (how much the rotation point should be offset along the axis)
 * `theta`: The position of the servo, or the angular position around the rotation axis
 ![Alt text](/Examples/local_joint.png)
 * `Red`: The rotation axis
@@ -23,7 +23,7 @@ All joints in a system can be modeled by the `Joint` object, which contains 5 fi
 
 ### Local Joint Space
 As mentioned, a joint is purely defined in its local space:
-* The x-axis is collinear with the line connecting this joint with the previous one (along the length of the previous joint's arm)
+* The x-axis is collinear with the line connecting this joint with the previous one (along the length of the previous joint's lever arm)
 * The z-axis is parallel to the rotation axis
 * The y-axis is the cross product of the x and z axes, and will always face "forward" such that increasing the previous joint's position will move the current joint in the direction of the y-axis
 

@@ -1,6 +1,6 @@
 import serial
 import time
-import InfIK
+from InfIK import *
 
 #Change the port to the serial COM of your arduino
 ser = serial.Serial(port="/dev/ttyACM0", baudrate=115200)
