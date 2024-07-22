@@ -13,6 +13,7 @@ float configuration[3];
 
 void setup() {
   Serial.begin(115200);
+  pinMode(LED_BUILTIN, OUTPUT);
   joint1.attach(PIN_JOINT_1);
   joint2.attach(PIN_JOINT_2);
   joint3.attach(PIN_JOINT_3);
@@ -22,14 +23,15 @@ void setServoPositions() {
   joint1.write(configuration[0] * 180 / PI);
   joint2.write(configuration[1] * 180 / PI);
   joint3.write(configuration[2] * 180 / PI);
+  digitalWrite(LED_BUILTIN, LOW);
 }
 
 void loop() {
   if (Serial.available()) {
-    configuration[joint_index++] = Serial.parseFloat();
-    if (joint_index == 3) {
-      joint_index = 0;
-      setServoPositions();
-    }
+    digitalWrite(LED_BUILTIN, HIGH);
+    for (int i = 0; i < 3; i++)
+      configuration[i] = Serial.parseFloat();
+    setServoPositions();
+    Serial.flush(); 
   }
 }

@@ -1,7 +1,9 @@
 import serial
-import IK_3D
+import sys
+sys.path.append('../')
+from IK_3D import *
 
-ser = Serial.serial(port="COM13", baudrate=115200)
+ser = serial.Serial(port="/dev/ttyACM0", baudrate=115200)
 
 def read():
     print(str(ser.readline().decode("utf")))
@@ -9,4 +11,13 @@ def read():
 def write(val):
     ser.write(str(val).encode('utf-8'))
 
-#TODO send table after solving and add accurate joint data
+# ik_system = IKSystem(
+#     joints=[
+#         Joint(0.39, 0.79, 60, 75),
+#         Joint(-0.41, 0.45, 43, 57),
+#         Joint(0.55, -0.87, 30, 60)
+#     ],
+#     constraints=[
+
+#     ]
+# )
