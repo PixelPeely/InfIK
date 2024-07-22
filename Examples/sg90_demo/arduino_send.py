@@ -1,9 +1,6 @@
 import serial
-import sys
 import time
-sys.path.append('../')
-print(sys.path)
-from IK_3D.IK_3D import *
+import InfIK
 
 #Change the port to the serial COM of your arduino
 ser = serial.Serial(port="/dev/ttyACM0", baudrate=115200)

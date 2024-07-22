@@ -1,4 +1,4 @@
-# 3D-IK
+# InfIK
 A 3D inverse kinematics solver for robotic systems with any number of linked servo motors
 
 ## Features
@@ -15,7 +15,7 @@ All joints in a system can be modeled by the `Joint` object, which contains 5 fi
 * `length` (const): The length of this joint's arm, which is perpandicular to the rotation axis (the next joint orbits this joint)
 * `height` (const): The distance along the rotation axis from the last joint
 * `theta`: The position of the servo, or the angular position around the rotation axis
-![Alt text](/local_joint.png)
+![Alt text](/Examples/local_joint.png)
 * `Red`: The rotation axis
 * `Blue`: The path traced by the next joint (end of arm) as it moves through a full rotation
 * `Green`: The arm

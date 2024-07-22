@@ -1,5 +1,4 @@
 import numpy as np
-import time
 
 class Joint:    
     alpha = 0 
@@ -145,7 +144,6 @@ class Solver:
 
         guess = [0,0,0]
         converged = True
-        start_t = time.time()
         for i in range(ik_system.max_iterations):
             lastGuess = guess
             guess = Solver.convergePoint(guess, ik_system)
@@ -154,8 +152,6 @@ class Solver:
             if (i == ik_system.max_iterations - 1):
                 print(f"Solver failed to converge! Last guess difference was {guess-lastGuess}, but the maximum is {ik_system.allowed_error}")
                 converged = False
-        end_t = time.time()
-        print(f"Solver finished in {(end_t - start_t) * 1000} ms")
         guess = Util.angleWrap(guess)
         Solver.updateJointPositions(guess, ik_system)
         return guess, converged

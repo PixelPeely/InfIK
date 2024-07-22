@@ -1,15 +1,15 @@
-from IK_3D import *
+from InfIK import *
  
 ik_system = IKSystem(
     joints=[
-        Joint(0.39, 0.76, 35, 33),
-        Joint(-0.41, 0.45, 30, 35),
-        Joint(0.55,-0.87, 32, 43),
+        Joint(0.39, 0.76, 1.5, 0.82),
+        Joint(-0.41, 0.45, 1.1, 0.76),
+        Joint(0.55,-0.87, 1.22, 1.06),
     ],
     constraints=[
-        Constraint(2, 0, 50),
-        Constraint(2, 1, 50),
-        Constraint(2, 2, 50)
+        Constraint(2, 0, 1),
+        Constraint(2, 1, 1),
+        Constraint(2, 2, 1)
     ]
 )
 
