@@ -37,7 +37,7 @@ Constraints are simple and have 3 fields:
 As mentioned, for the system to be solvable, the number of constraints must equal the number of joints
 
 ## How to Use
-1. Import `IK_3D.py` and create an `IKSystem` object to model the system
+1. Import `InfIK` and create an `IKSystem` object to model the system
     * `joints`: List of the joints in the system in the order they are connected
     * `constraints`: Unordered list of constraints to be placed on the system
     * `allowed_error` (optional): The maximum allowed difference between two consecutive guesses (Default: `1e-3`)
